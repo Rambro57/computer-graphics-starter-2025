@@ -10,3 +10,6 @@
 [submodule "external/GL"]
 	path = external/GL
 	url = https://github.com/Perlmint/glew-cmake
+[submodule "external/imgui"]
+	path = external/imgui
+	url = https://github.com/ocornut/imgui.git
