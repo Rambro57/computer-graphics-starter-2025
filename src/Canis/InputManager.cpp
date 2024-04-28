@@ -1,4 +1,5 @@
 #include "InputManager.hpp"
+#include <imgui_impl_sdl2.h>
 #include <SDL_events.h>
 #include <SDL_gamecontroller.h>
 #include "Debug.hpp"
@@ -27,6 +28,7 @@ namespace Canis
         SDL_Event event;
         while (SDL_PollEvent(&event))
         {
+            ImGui_ImplSDL2_ProcessEvent(&event);
             switch (event.type)
             {
             case SDL_QUIT:

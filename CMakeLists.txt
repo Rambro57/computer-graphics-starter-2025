@@ -10,6 +10,16 @@ add_subdirectory(external/glm)
 add_subdirectory(external/SDL)
 add_subdirectory(external/stb)
 
+# Set where the ImGui files are stored
+set(IMGUI_PATH  "external/imgui")
+    
+# Compile as static library 
+file(GLOB IMGUI_SOURCES ${IMGUI_PATH}/*.cpp ${IMGUI_PATH}/backends/imgui_impl_opengl3.cpp ${IMGUI_PATH}/backends/imgui_impl_sdl2.cpp ${IMGUI_PATH}/misc/cpp/imgui_stdlib.cpp) 
+file(GLOB IMGUI_HEADERS ${IMGUI_PATH}/*.h ${IMGUI_PATH}/backends/imgui_impl_opengl3.h ${IMGUI_PATH}/backends/imgui_impl_sdl2.h ${IMGUI_PATH}/misc/cpp/imgui_stdlib.h) 
+add_library("imgui" STATIC ${IMGUI_SOURCES})
+target_include_directories("imgui" PUBLIC ${IMGUI_PATH} ${IMGUI_PATH}/backends/ ${IMGUI_PATH}/misc/cpp/)
+target_link_libraries("imgui" PRIVATE SDL2main SDL2-static)
+
 file(GLOB_RECURSE SRC_SOURCES src/*.c*)
 file(GLOB_RECURSE SRC_HEADERS src/*.h*)
 
@@ -22,6 +32,7 @@ target_link_libraries(${PROJECT_NAME}
         libglew_static
         SDL2main
         SDL2-static
+        imgui
 )
 
 target_include_directories(${PROJECT_NAME}
@@ -30,6 +41,7 @@ target_include_directories(${PROJECT_NAME}
         stb
         SDL2main
         SDL2-static
+        imgui
 )
 
 # This command will copy your assets folder to your running directory, in order to have access to your shaders, textures, etc

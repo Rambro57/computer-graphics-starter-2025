@@ -84,12 +84,14 @@ namespace Canis
         }
 
         // Create OpenGL Context
-        SDL_GLContext glContext = SDL_GL_CreateContext((SDL_Window*)sdlWindow);
+        void* m_glContext = (void*)SDL_GL_CreateContext((SDL_Window*)sdlWindow);
 
-        if (glContext == nullptr) // Check for an error when creating the OpenGL Context
+        if (m_glContext == nullptr) // Check for an error when creating the OpenGL Context
         {
             FatalError("SDL_GL context could not be created!");
         }
+
+
 
         // Load OpenGL
         GLenum error = glewInit();

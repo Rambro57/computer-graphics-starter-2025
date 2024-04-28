@@ -18,6 +18,8 @@ namespace Canis
         void Spawn(Entity _entity);
         void SpawnPointLight(PointLight _light);
         void SpawnDirectionalLight(DirectionalLight _light);
+        Entity* GetEntity(unsigned int _index) { return &m_entities[_index]; }
+        int GetEntitiesSize() { return m_entities.size(); }
         Entity* GetEntityWithTag(std::string _tag);
         std::vector<Entity*> GetEntitiesWithTag(std::string _tag);
         PointLight* GetPointLight(glm::vec3 _position); // returns nullptr when light is not found

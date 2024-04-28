@@ -13,6 +13,7 @@
 #include "Canis/Camera.hpp"
 #include "Canis/Model.hpp"
 #include "Canis/World.hpp"
+#include "Canis/Editor.hpp"
 #include "Canis/FrameRateManager.hpp"
 
 using namespace glm;
@@ -52,6 +53,8 @@ int main(int argc, char *argv[])
 
     Canis::World world(&window, &inputManager);
     SpawnLights(world);
+
+    Canis::Editor editor(&window, &world);
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_ALPHA);
@@ -143,6 +146,8 @@ int main(int argc, char *argv[])
 
         world.Update(deltaTime);
         world.Draw(deltaTime);
+
+        editor.Draw();
 
         window.SwapBuffer();
         

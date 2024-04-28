@@ -28,12 +28,16 @@ namespace Canis
         int GetScreenWidth() { return screenWidth; }
         int GetScreenHeight() { return screenHeight; }
 
+        void* GetSDLWindow() { return sdlWindow; }
+        void* GetGLContext() { return m_glContext; }
+
         void ToggleFullScreen();
 
         float fps;
 
     private:
         void *sdlWindow;
+        void *m_glContext;
         int screenWidth, screenHeight;
         bool m_fullscreen = false;
         bool mouseLock = false;

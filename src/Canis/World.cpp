@@ -36,6 +36,9 @@ namespace Canis
 
         for (int i = 0; i < m_entities.size(); i++)
         {
+            if (m_entities[i].active == false)
+                continue;
+            
             Shader *shader = m_entities[i].shader;
             shader->Use();
             shader->SetVec3("COLOR", 1.0f, 1.0f, 1.0f);
