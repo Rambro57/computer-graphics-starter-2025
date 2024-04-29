@@ -6,7 +6,7 @@
 
 namespace Canis
 {
-    ProjectConfig& GetProjectConfig()
+    ProjectConfig& GetConfig()
     {
         static ProjectConfig projectConfig = {};
         return projectConfig;
@@ -31,29 +31,29 @@ namespace Canis
         while(file >> word) {
             if (word == "fullscreen"){
                 if (file >> word) {
-                    GetProjectConfig().fullscreen = (word == "true");
+                    GetConfig().fullscreen = (word == "true");
                     continue;
                 }
             }
             if (word == "width") {
                 if (file >> wholeNumber) {
-                    GetProjectConfig().width = wholeNumber;
+                    GetConfig().width = wholeNumber;
                     continue;
                 }
             }
             if (word == "heigth") {
                 if (file >> wholeNumber) {
-                    GetProjectConfig().heigth = wholeNumber;
+                    GetConfig().heigth = wholeNumber;
                     continue;
                 }
             }
             if (word == "volume") {
                 if (file >> fNumber) {
-                    GetProjectConfig().volume = fNumber;
-                    if (GetProjectConfig().volume > 1.5f)
-                        GetProjectConfig().volume = 1.5f;
-                    if (GetProjectConfig().volume < 0.0f)
-                        GetProjectConfig().volume = 0.0f;
+                    GetConfig().volume = fNumber;
+                    if (GetConfig().volume > 1.5f)
+                        GetConfig().volume = 1.5f;
+                    if (GetConfig().volume < 0.0f)
+                        GetConfig().volume = 0.0f;
                     continue;
                 }
             }
@@ -61,7 +61,7 @@ namespace Canis
             {
                 if(file >> word)
                 {
-                    GetProjectConfig().useFrameLimit = (word == "true");
+                    GetConfig().useFrameLimit = (word == "true");
                     continue;
                 }
             }
@@ -69,7 +69,7 @@ namespace Canis
             {
                 if(file >> wholeNumber)
                 {
-                    GetProjectConfig().frameLimit = wholeNumber;
+                    GetConfig().frameLimit = wholeNumber;
                     continue;
                 }
             }
@@ -77,7 +77,7 @@ namespace Canis
             {
                 if(file >> word)
                 {
-                    GetProjectConfig().overrideSeed = (word == "true");
+                    GetConfig().overrideSeed = (word == "true");
                     continue;
                 }
             }
@@ -85,7 +85,7 @@ namespace Canis
             {
                 if(file >> unsignedWholeNumber)
                 {
-                    GetProjectConfig().seed = unsignedWholeNumber;
+                    GetConfig().seed = unsignedWholeNumber;
                     continue;
                 }
             }
@@ -93,7 +93,7 @@ namespace Canis
             {
                 if (file >> word)
                 {
-                    GetProjectConfig().log = (word == "true");
+                    GetConfig().log = (word == "true");
                     continue;
                 }
             }

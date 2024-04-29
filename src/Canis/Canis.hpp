@@ -16,7 +16,7 @@ namespace Canis
         bool log = false;
     };
 
-    ProjectConfig& GetProjectConfig();
+    ProjectConfig& GetConfig();
 
     int Init();
 } // end of Canis namespace

@@ -12,7 +12,7 @@ namespace Canis
     class World
     {
     public:
-        World(Window *_window, InputManager *_inputManager);
+        World(Window *_window, InputManager *_inputManager, std::string _skyboxPath);
         void Update(double _deltaTime);
         void Draw(double _deltaTime);
         void Spawn(Entity _entity);
@@ -29,6 +29,9 @@ namespace Canis
         InputManager *m_inputManager;
         Window *m_window;
         Camera m_camera = Camera(glm::vec3(0.0f, 0.0f, -3.0f));
+        Shader m_skyboxShader;
+        unsigned int m_skyboxId;
+        Model m_skyboxModel;
         DirectionalLight m_directionalLight;
         std::vector<Entity> m_entities = {};
         std::vector<PointLight> m_pointLights = {};

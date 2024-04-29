@@ -42,16 +42,13 @@ int main(int argc, char *argv[])
 
     unsigned int flags = 0;
 
-    if (Canis::GetProjectConfig().fullscreen)
+    if (Canis::GetConfig().fullscreen)
         flags |= Canis::WindowFlags::FULLSCREEN;
 
-    window.Create("Hello Graphics",
-                  Canis::GetProjectConfig().width,
-                  Canis::GetProjectConfig().heigth,
-                  flags);
+    window.Create("Hello Graphics", Canis::GetConfig().width, Canis::GetConfig().heigth, flags);
     /// END OF WINDOW SETUP
 
-    Canis::World world(&window, &inputManager);
+    Canis::World world(&window, &inputManager, "assets/textures/lowpoly-skybox/");
     SpawnLights(world);
 
     Canis::Editor editor(&window, &world);
@@ -139,7 +136,7 @@ int main(int argc, char *argv[])
     double fps = 0.0;
 
     // Application loop
-    while (inputManager.Update(Canis::GetProjectConfig().width, Canis::GetProjectConfig().heigth))
+    while (inputManager.Update(Canis::GetConfig().width, Canis::GetConfig().heigth))
     {
         deltaTime = frameRateManager.StartFrame();
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -150,7 +147,7 @@ int main(int argc, char *argv[])
         editor.Draw();
 
         window.SwapBuffer();
-        
+
         // EndFrame will pause the app when running faster than frame limit
         fps = frameRateManager.EndFrame();
 

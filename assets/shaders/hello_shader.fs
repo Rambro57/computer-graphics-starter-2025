@@ -46,7 +46,7 @@ vec3 CalculatePointLight(PointLight _pointLight);
 
 void main() {
 	// base color
-	vec4 color = texture(MATERIAL.diffuse, fragmentUV);
+	vec4 color = texture(MATERIAL.diffuse, fragmentUV) * vec4(COLOR, 1.0);
 
     if (color.a <= 0.0)
     {

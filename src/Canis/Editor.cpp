@@ -87,6 +87,11 @@ namespace Canis
                 ImGui::InputFloat3("Scale", glm::value_ptr(entity->transform.scale));
             }
 
+            if (ImGui::CollapsingHeader("Material"))
+            {
+                ImGui::InputFloat3("Color", glm::value_ptr(entity->color));
+            }
+
             // ImGui::ColorEdit3("clear color", (float *)&clear_color); // Edit 3 floats representing a color
 
             // ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);

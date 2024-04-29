@@ -1,4 +1,6 @@
 #include "World.hpp"
+#include "IOManager.hpp"
+
 #include <SDL.h>
 #include <GL/glew.h>
 #include <glm/glm.hpp>
@@ -8,10 +10,32 @@ using namespace glm;
 
 namespace Canis
 {
-    World::World(Window *_window, InputManager *_inputManager)
+    World::World(Window *_window, InputManager *_inputManager, std::string _skyboxPath)
     {
         m_window = _window;
         m_inputManager = _inputManager;
+
+        m_skyboxShader.Compile("assets/shaders/skybox.vs", "assets/shaders/skybox.fs");
+        m_skyboxShader.AddAttribute("aPosition");
+        m_skyboxShader.Link();
+        m_skyboxShader.Use();
+        m_skyboxShader.SetInt("SKYBOX", 0);
+        m_skyboxShader.UnUse();
+
+        /// Load Skybox
+        std::vector<std::string> faces;
+
+        faces.push_back(std::string(_skyboxPath).append("skybox_left.png"));
+        faces.push_back(std::string(_skyboxPath).append("skybox_right.png"));
+        faces.push_back(std::string(_skyboxPath).append("skybox_up.png"));
+        faces.push_back(std::string(_skyboxPath).append("skybox_down.png"));
+        faces.push_back(std::string(_skyboxPath).append("skybox_front.png"));
+        faces.push_back(std::string(_skyboxPath).append("skybox_back.png"));
+
+        m_skyboxId = Canis::LoadImageToCubemap(faces, GL_RGBA);
+
+        m_skyboxModel = LoadModel("assets/models/cube.obj");
+        /// End of Skybox
     }
 
     void World::Update(double _deltaTime)
@@ -38,10 +62,10 @@ namespace Canis
         {
             if (m_entities[i].active == false)
                 continue;
-            
+
             Shader *shader = m_entities[i].shader;
             shader->Use();
-            shader->SetVec3("COLOR", 1.0f, 1.0f, 1.0f);
+            shader->SetVec3("COLOR", m_entities[i].color);
             shader->SetVec3("VIEWPOS", m_camera.Position);
             shader->SetInt("NUMBEROFPOINTLIGHTS", 4);
             shader->SetFloat("TIME", SDL_GetTicks() / 1000.0f);
@@ -60,6 +84,21 @@ namespace Canis
             Canis::Draw(*m_entities[i].model);
             shader->UnUse();
         }
+
+        // Skybox
+        glDepthFunc(GL_LEQUAL);
+        m_skyboxShader.Use();
+        // the cast to mat3 removes position of the camera as a factor
+        m_skyboxShader.SetMat4("VIEW", glm::mat4(glm::mat3(m_camera.GetViewMatrix())));
+        m_skyboxShader.SetMat4("PROJECTION", project);
+
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, m_skyboxId);
+        Canis::Draw(m_skyboxModel);
+
+        m_skyboxShader.UnUse();
+        glDepthFunc(GL_LESS);
+        // End of Skybox
     }
 
     void World::Spawn(Entity _entity)
@@ -106,12 +145,12 @@ namespace Canis
     }
 
     // returns nullptr when light is not found
-    PointLight* World::GetPointLight(glm::vec3 _position)
+    PointLight *World::GetPointLight(glm::vec3 _position)
     {
-        for(int i = 0; i < m_pointLights.size(); i++)
+        for (int i = 0; i < m_pointLights.size(); i++)
             if (m_pointLights[i].position == _position)
                 return &m_pointLights[i];
-        
+
         return nullptr;
     }
 

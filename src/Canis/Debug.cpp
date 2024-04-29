@@ -8,7 +8,7 @@ namespace Canis
 
   void FatalError(std::string message)
   {
-    if (GetProjectConfig().log == false)
+    if (GetConfig().log == false)
       return;
     // \033[1;31m red \033[0m reset
     std::cout << "\033[1;31mFatalError: \033[0m" + message << std::endl;
@@ -20,7 +20,7 @@ namespace Canis
 
   void Error(std::string message)
   {
-    if (GetProjectConfig().log == false)
+    if (GetConfig().log == false)
       return;
     // \033[1;31m red \033[0m reset
     std::cout << "\033[1;31mError: \033[0m" + message << std::endl;
@@ -28,7 +28,7 @@ namespace Canis
 
   void Warning(std::string message)
   {
-    if (GetProjectConfig().log == false)
+    if (GetConfig().log == false)
       return;
     // \033[1;33m yellow \033[0m reset
     std::cout << "\033[1;33mWarning: \033[0m" + message << std::endl;
@@ -36,7 +36,7 @@ namespace Canis
 
   void Log(std::string message)
   {
-    if (GetProjectConfig().log == false)
+    if (GetConfig().log == false)
       return;
     // \033[1;32m green \033[0m reset
     std::cout << "\033[1;32mLog: \033[0m" + message << std::endl;
