@@ -1,10 +1,10 @@
 #include <iostream>
 #include <SDL.h>
-#include <GL/glew.h>
 #include <glm/glm.hpp>
 #include <string>
 #include <fstream>
 #include "Canis/Canis.hpp"
+#include "Canis/Graphics.hpp"
 #include "Canis/Window.hpp"
 #include "Canis/Shader.hpp"
 #include "Canis/Debug.hpp"
@@ -53,8 +53,8 @@ int main(int argc, char *argv[])
 
     Canis::Editor editor(&window, &world);
 
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_ALPHA);
+    Canis::Graphics::EnableAlphaChannel();
+    Canis::Graphics::EnableDepthTest();
 
     /// SETUP SHADER
     Canis::Shader shader;
@@ -139,7 +139,7 @@ int main(int argc, char *argv[])
     while (inputManager.Update(Canis::GetConfig().width, Canis::GetConfig().heigth))
     {
         deltaTime = frameRateManager.StartFrame();
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        Canis::Graphics::ClearBuffer(COLOR_BUFFER_BIT | DEPTH_BUFFER_BIT);
 
         world.Update(deltaTime);
         world.Draw(deltaTime);
