@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
     Canis::World world(&window, &inputManager, "assets/textures/lowpoly-skybox/");
     SpawnLights(world);
 
-    Canis::Editor editor(&window, &world);
+    Canis::Editor editor(&window, &world, &inputManager);
 
     Canis::Graphics::EnableAlphaChannel();
     Canis::Graphics::EnableDepthTest();
@@ -151,7 +151,7 @@ int main(int argc, char *argv[])
         // EndFrame will pause the app when running faster than frame limit
         fps = frameRateManager.EndFrame();
 
-        Canis::Log("FPS: " + std::to_string(fps) + " DeltaTime: " + std::to_string(deltaTime));
+        //Canis::Log("FPS: " + std::to_string(fps) + " DeltaTime: " + std::to_string(deltaTime));
     }
 
     return 0;
