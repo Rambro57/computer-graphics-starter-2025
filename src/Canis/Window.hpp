@@ -1,8 +1,6 @@
 #pragma once
 #include <string>
 
-#include "Debug.hpp"
-
 namespace Canis
 {
     enum WindowFlags

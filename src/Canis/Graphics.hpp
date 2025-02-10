@@ -1,8 +1,5 @@
 #pragma once
 
-#include "World.hpp"
-#include "Window.hpp"
-
 namespace Canis
 {
 namespace Graphics

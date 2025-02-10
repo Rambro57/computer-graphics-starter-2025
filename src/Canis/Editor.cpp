@@ -1,4 +1,5 @@
 #include "Editor.hpp"
+#include "Debug.hpp"
 
 #include <SDL.h>
 #include <GL/glew.h>
@@ -57,7 +58,7 @@ namespace Canis
         glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_rbo);
 
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-            std::cerr << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << std::endl;
+            FatalError("ERROR::FRAMEBUFFER:: Framebuffer is not complete!");
         }
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
 

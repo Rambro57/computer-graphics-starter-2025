@@ -1,6 +1,8 @@
 #include "Window.hpp"
+#include "Debug.hpp"
 #include <SDL.h>
 #include <GL/glew.h>
+
 
 namespace Canis
 {

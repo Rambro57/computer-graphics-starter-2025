@@ -1,9 +1,8 @@
-#include <iostream>
-#include <SDL.h>
 #include <glm/glm.hpp>
 #include <string>
 #include <fstream>
 #include "Canis/Canis.hpp"
+#include "Canis/Entity.hpp"
 #include "Canis/Graphics.hpp"
 #include "Canis/Window.hpp"
 #include "Canis/Shader.hpp"
@@ -28,6 +27,7 @@ std::vector<std::vector<std::vector<unsigned int>>> map = {};
 // declaring functions
 void SpawnLights(Canis::World &_world);
 void LoadMap(std::string _path);
+void Rotate(Canis::World &_world, Canis::Entity &_entity, float _deltaTime);
 
 int main(int argc, char *argv[])
 {
@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
     /// END OF SHADER
 
     /// Load Image
-    Canis::GLTexture texture = Canis::LoadImageGL("assets/textures/glass.png", true);
+    Canis::GLTexture glassTexture = Canis::LoadImageGL("assets/textures/glass.png", true);
     Canis::GLTexture grassTexture = Canis::LoadImageGL("assets/textures/grass.png", false);
     Canis::GLTexture textureSpecular = Canis::LoadImageGL("assets/textures/container2_specular.png", true);
     /// End of Image Loading
@@ -109,7 +109,7 @@ int main(int argc, char *argv[])
                 {
                 case 1: // places a glass block
                     entity.tag = "glass";
-                    entity.albedo = &texture;
+                    entity.albedo = &glassTexture;
                     entity.specular = &textureSpecular;
                     entity.model = &cubeModel;
                     entity.shader = &shader;
@@ -123,6 +123,7 @@ int main(int argc, char *argv[])
                     entity.model = &grassModel;
                     entity.shader = &grassShader;
                     entity.transform.position = vec3(x + 0.0f, y + 0.0f, z + 0.0f);
+                    entity.Update = &Rotate;
                     world.Spawn(entity);
                     break;
                 default:
@@ -151,10 +152,15 @@ int main(int argc, char *argv[])
         // EndFrame will pause the app when running faster than frame limit
         fps = frameRateManager.EndFrame();
 
-        //Canis::Log("FPS: " + std::to_string(fps) + " DeltaTime: " + std::to_string(deltaTime));
+        Canis::Log("FPS: " + std::to_string(fps) + " DeltaTime: " + std::to_string(deltaTime));
     }
 
     return 0;
+}
+
+void Rotate(Canis::World &_world, Canis::Entity &_entity, float _deltaTime)
+{
+    _entity.transform.rotation.y += _deltaTime;
 }
 
 void LoadMap(std::string _path)
