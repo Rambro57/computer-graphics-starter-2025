@@ -1,3 +1,7 @@
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 #include <glm/glm.hpp>
 #include <string>
 #include <fstream>
@@ -29,7 +33,12 @@ void SpawnLights(Canis::World &_world);
 void LoadMap(std::string _path);
 void Rotate(Canis::World &_world, Canis::Entity &_entity, float _deltaTime);
 
-int main(int argc, char *argv[])
+#ifdef _WIN32
+#define main SDL_main
+extern "C" int main(int argc, char* argv[])
+#else
+int main(int argc, char* argv[])
+#endif
 {
     Canis::Init();
     Canis::InputManager inputManager;
@@ -116,7 +125,7 @@ int main(int argc, char *argv[])
                     entity.transform.position = vec3(x + 0.0f, y + 0.0f, z + 0.0f);
                     world.Spawn(entity);
                     break;
-                case 2: // places a glass block
+                case 2: // places a grass block
                     entity.tag = "grass";
                     entity.albedo = &grassTexture;
                     entity.specular = &textureSpecular;
@@ -160,7 +169,7 @@ int main(int argc, char *argv[])
 
 void Rotate(Canis::World &_world, Canis::Entity &_entity, float _deltaTime)
 {
-    _entity.transform.rotation.y += _deltaTime;
+    //_entity.transform.rotation.y += _deltaTime;
 }
 
 void LoadMap(std::string _path)
