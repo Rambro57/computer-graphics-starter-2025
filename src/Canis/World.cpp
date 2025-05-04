@@ -14,6 +14,7 @@ namespace Canis
     {
         m_window = _window;
         m_inputManager = _inputManager;
+        m_totalTime = 0.0; // Initialize time at construction
 
         m_skyboxShader.Compile("assets/shaders/skybox.vs", "assets/shaders/skybox.fs");
         m_skyboxShader.AddAttribute("aPosition");
@@ -40,6 +41,9 @@ namespace Canis
 
     void World::Update(double _deltaTime)
     {
+        // Update the total time
+        m_totalTime += _deltaTime;
+        
         UpdateCameraMovement(_deltaTime);
 
         for (int i = 0; i < m_entities.size(); i++)
@@ -68,7 +72,7 @@ namespace Canis
             shader->SetVec3("COLOR", m_entities[i].color);
             shader->SetVec3("VIEWPOS", m_camera.Position);
             shader->SetInt("NUMBEROFPOINTLIGHTS", 4);
-            shader->SetFloat("TIME", SDL_GetTicks() / 1000.0f);
+            shader->SetFloat("TIME", m_totalTime); // Use our tracked time instead of SDL_GetTicks
 
             UpdateLights(*shader);
 
